@@ -7,10 +7,14 @@ import android.view.View;
 
 public class HomeActivity extends AppCompatActivity {
 
+    BDD bdd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        bdd = new BDD(this);
     }
 
     // On accède à la map
@@ -35,5 +39,28 @@ public class HomeActivity extends AppCompatActivity {
     public void accesFilter(View v) {
         Intent i = new Intent(this, FilterActivity.class);
         startActivity(i);
+
+        BDD b = new BDD(this);
+
+        String message = "";
+        String presence = "";
+        String heure = "";
+
+        for(Point point : b.getAllPoints()) {
+
+            if(point.getAffiche() == 1) {
+                presence = "Affiché";
+            }
+            else
+            {
+                presence = "Ne pas affiché";
+            }
+
+
+
+            message += point.getLibelle() + " / " + point.getDescription() + " / " + " ( " + presence + " ) \n";
+        }
+
+        System.out.println(message.toString());
     }
 }
