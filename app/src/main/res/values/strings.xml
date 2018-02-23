@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Gestion de la map</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="homeTitle">Accueil</string>
+    <string name="mapsTitle">Affichage de la map</string>
+    <string name="settingsTitle">Paramètres</string>
+    <string name="filterTitle">Filtrer les markers</string>
+</resources>
