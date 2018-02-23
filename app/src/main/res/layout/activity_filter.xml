@@ -14,7 +14,18 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true">
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <TableLayout
+                android:layout_width="fill_parent"
+                android:stretchColumns="0"
+                android:layout_height="wrap_content"
+                android:id="@+id/idTable">
+            </TableLayout>
+
+        </ScrollView>
 
     </LinearLayout>
 
