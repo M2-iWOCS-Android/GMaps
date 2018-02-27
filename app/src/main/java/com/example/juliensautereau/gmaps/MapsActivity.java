@@ -12,9 +12,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
+    private BDD bdd;
 
-    private BDD b;
+    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +25,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        b = new BDD(this);
+        bdd = new BDD(this);
     }
 
     /**
@@ -45,7 +45,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng lh = new LatLng(49.4938, 0.1077);
         //mMap.addMarker(new MarkerOptions().position(lh).title("Le Havre"));
 
-        for(Point point : b.getAllPoints()) {
+        for(Point point : bdd.getAllPoints()) {
 
             if(point.getAffiche() == 1) {
 
@@ -59,6 +59,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void onBackPressed() {
-        this.finish();
+        bdd.stop(); this.finish();
     }
 }

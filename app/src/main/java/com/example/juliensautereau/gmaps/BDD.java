@@ -1,5 +1,6 @@
 package com.example.juliensautereau.gmaps;
 
+import android.content.Context;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -8,13 +9,15 @@ public class BDD {
 
     PointBDD pointBDD;
 
+    static boolean initDB = false;
+
     public BDD(HomeActivity th) {
         //Création de la BDD point
         pointBDD = new PointBDD(th);
 
         //Création des points
         Point pt1 = new Point("Université Le Havre", "Lieu d'étude universitaire", 49.4964477, 0.12827249999998003);
-       // Point pt1 = new Point("Université Le Havre", "lieu", 0.23,0);
+        // Point pt1 = new Point("Université Le Havre", "lieu", 0.23,0);
         /*Etudiant et1 = new Etudiant("BRUN", "Raphael", "4145f2a3e2780");
         Etudiant et2 = new Etudiant("GRENET", "Ronan", "448570a3e2780");
         Etudiant et3 = new Etudiant("SAUTEREAU", "Julien", "47a7e425f4380");
@@ -26,12 +29,20 @@ public class BDD {
         pointBDD.open();
 
         //Remplissage manuel
-        pointBDD.insertPoint(pt1);
+        if(!initDB) {
+            pointBDD.insertPoint(pt1);
+            initDB = true;
+        }
+
         /*pointBDD.insertEtudiant(et2);
         pointBDD.insertEtudiant(et3);
         pointBDD.insertEtudiant(et4);
         pointBDD.insertEtudiant(et5);
         pointBDD.insertEtudiant(et6);*/
+
+    }
+
+    public void initBDD(Context th) {
 
     }
 
@@ -63,11 +74,12 @@ public class BDD {
     public String detectedWithNFC(String s) {
         return etudiantBdd.getEtudiantInfos(s);
     }
+    */
 
-    public void update(String netudiant, String heure) {
-        Etudiant e = etudiantBdd.getEtudiantWithNumEt(netudiant);
-        etudiantBdd.updateEtudiant(netudiant, heure, e);
-    }*/
+    public void update(String libelle, int affiche) {
+        Point p = pointBDD.getEtudiantWithNumEt(libelle);
+        pointBDD.updatePoint(libelle, affiche, p);
+    }
 
     //Récupération de tous les étudiants
     public ArrayList<Point> getAllPoints() {

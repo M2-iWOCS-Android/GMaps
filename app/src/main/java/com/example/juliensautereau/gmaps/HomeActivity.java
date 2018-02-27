@@ -17,19 +17,31 @@ public class HomeActivity extends AppCompatActivity {
         bdd = new BDD(this);
     }
 
+    protected void onDestroy() {
+        super.onDestroy();
+        bdd.stop();
+    }
+
+    public void onBackPressed() {
+        bdd.stop();
+        this.finish();
+    }
+
     // On accède à la map
     public void accesMap(View v) {
+        bdd.stop();
         Intent i = new Intent(this, MapsActivity.class);
         startActivity(i);
     }
 
     // On quitte l'application
     public void quitApp(View v) {
-        this.finish();
+        bdd.stop(); this.finish();
     }
 
     // On accède aux paramètres
     public void accesSettings(View v) {
+        bdd.stop();
         Intent i = new Intent(this, SettingsActivity.class);
         startActivity(i);
     }
@@ -40,13 +52,14 @@ public class HomeActivity extends AppCompatActivity {
         Intent i = new Intent(this, FilterActivity.class);
         startActivity(i);
 
-        BDD b = new BDD(this);
+        bdd.stop();
+        bdd = new BDD(this);
 
         String message = "";
         String presence = "";
         String heure = "";
 
-        for(Point point : b.getAllPoints()) {
+        for(Point point : bdd.getAllPoints()) {
 
             if(point.getAffiche() == 1) {
                 presence = "Affiché";
@@ -62,5 +75,7 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         System.out.println(message.toString());
+
+        bdd.stop();
     }
 }
