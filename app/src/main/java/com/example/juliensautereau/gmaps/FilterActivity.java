@@ -72,16 +72,12 @@ public class FilterActivity extends AppCompatActivity {
 
         for(int i = 0; i < tv2.length; i++) {
 
-            int result = 0;
-
             if(col2.get(i) != tv2[i].isChecked()) {
 
-                switch(col2.get(i)) {
-                    case true: result = 1; break;
-                    case false: result = 0; break;
-                }
+                System.out.println(col1.get(i).toString() + " " + col2.get(i));
+                int affiche = (col2.get(i)) ? 1:0;
 
-                b.update(col1.get(i).toString(), 0);
+                b.update(col1.get(i).toString(), affiche);
             }
         }
 
