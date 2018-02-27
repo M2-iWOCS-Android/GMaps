@@ -14,6 +14,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
 
+    private BDD b;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +24,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        b = new BDD(this);
     }
 
     /**
@@ -40,6 +44,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Add a marker in Sydney and move the camera
         LatLng lh = new LatLng(49.4938, 0.1077);
         //mMap.addMarker(new MarkerOptions().position(lh).title("Le Havre"));
+
+        for(Point point : b.getAllPoints()) {
+
+            if(point.getAffiche() == 1) {
+
+                LatLng newP = new LatLng(point.getLatitude(), point.getLongitude());
+                mMap.addMarker(new MarkerOptions().position(newP).title(point.getLibelle()));
+
+            }
+        }
         mMap.moveCamera(CameraUpdateFactory.newLatLng(lh));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(lh, 10));
     }
