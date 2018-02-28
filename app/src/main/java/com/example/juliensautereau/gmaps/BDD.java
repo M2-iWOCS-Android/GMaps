@@ -16,7 +16,6 @@ public class BDD {
         pointBDD = new PointBDD(th);
 
         //Création des points
-        Point pt1 = new Point("Université Le Havre", "Lieu d'étude universitaire", 49.4964477, 0.12827249999998003);
         // Point pt1 = new Point("Université Le Havre", "lieu", 0.23,0);
         /*Etudiant et1 = new Etudiant("BRUN", "Raphael", "4145f2a3e2780");
         Etudiant et2 = new Etudiant("GRENET", "Ronan", "448570a3e2780");
@@ -30,7 +29,7 @@ public class BDD {
 
         //Remplissage manuel
         if(!initDB) {
-            pointBDD.insertPoint(pt1);
+            pointBDD.initPoint();
             initDB = true;
         }
 
@@ -68,7 +67,7 @@ public class BDD {
     public void stop() {  pointBDD.close(); }
 
     public void raz() {
-        pointBDD.raz();
+        pointBDD.reinitDB();
     }
     /*
     public String detectedWithNFC(String s) {

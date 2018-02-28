@@ -17,7 +17,7 @@ public class PointBDD {
     private static final int VERSION_BDD = 1;
 
     private static final String TABLE_POINT = "table_point";
-    private static final String COL_ID = "id";
+    private static final String COL_ID = "_id";
     private static final int NUM_COL_ID = 0;
 
     private static final String COL_NOM = "libelle";
@@ -88,7 +88,29 @@ public class PointBDD {
         return bdd.update(TABLE_POINT, values, COL_NOM + " LIKE \"" + libelle +"\"", null);
     }
 
-    public int removeEtudiantWithID(int id){
+    public void reinitDB() {
+
+        this.open();
+
+        // on supprime tous les points inscrit en bdd
+        for(Point point : getEtudiantAll()) {
+
+            this.removePointWithID(point.getId());
+        }
+
+        // on rajoute les valeurs initiales
+        this.initPoint();
+
+        this.close();
+    }
+
+    public void initPoint() {
+
+        Point pt1 = new Point("Université Le Havre", "Lieu d'étude universitaire", 49.4964477, 0.12827249999998003);
+        insertPoint(pt1);
+    }
+
+    public int removePointWithID(int id){
         //Suppression d'un livre de la BDD grâce à l'ID
         return bdd.delete(TABLE_POINT, COL_ID + " = " +id, null);
     }

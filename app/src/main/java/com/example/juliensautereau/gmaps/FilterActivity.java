@@ -1,14 +1,11 @@
 package com.example.juliensautereau.gmaps;
 
-import android.database.MatrixCursor;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -65,21 +62,21 @@ public class FilterActivity extends AppCompatActivity {
         b.stop();
     }
 
+    // On met à jour l'affichage des markers
     public void updateDB() {
-
-        //TODO
-        System.out.println("Length : "+tv2.length);
 
         for(int i = 0; i < tv2.length; i++) {
 
             if(col2.get(i) != tv2[i].isChecked()) {
 
-                System.out.println(col1.get(i).toString() + " " + col2.get(i));
-                int affiche = (col2.get(i)) ? 1:0;
+                System.out.println(col1.get(i).toString() + " " + tv2[i].isChecked());
+                int affichage = (tv2[i].isChecked()) ? 1:0;
 
-                b.update(col1.get(i).toString(), affiche);
+                b.update(col1.get(i).toString(), affichage);
             }
         }
+
+        afficherMessage("Mise à jour des markers effectuée avec succès et bravoure !");
 
         refresh();
     }
