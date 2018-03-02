@@ -100,6 +100,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                        i.putExtra("coordX", latLng.latitude);
                                        i.putExtra("coordY", latLng.longitude);
                                        startActivity(i);
+                                       MapsActivity.this.finish();
                                    }
                                })
                                .setNegativeButton("Annuler", new DialogInterface.OnClickListener() {

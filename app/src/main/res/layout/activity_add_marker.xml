@@ -103,6 +103,7 @@
                 android:onClick="takePhoto" />
 
             <TextView
+                android:id="@+id/path_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -154,6 +155,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Ajouter un marker" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Annuler l'ajout"
+                android:onClick="quitAdd"/>
 
         </LinearLayout>
 

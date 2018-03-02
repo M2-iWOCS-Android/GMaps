@@ -29,13 +29,24 @@ public class AddMarkerActivity extends AppCompatActivity {
     private final static int REQUEST_CAMERA = 1102;
     public static final String CAMERA_IMAGES_DIR = "Markers";
     String mOutputFilePath;
+
+    private double latitude = 0;
+    private double longitude = 0;
+
     TextView pathImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_marker);
-        pathImage = (findViewById(R.id.text1));
+        pathImage = findViewById(R.id.path_image);
+
+        Bundle bundle = getIntent().getExtras();
+
+        latitude = bundle.getDouble("coordX");
+        longitude = bundle.getDouble("coordY");
+
+        System.out.println(latitude + " : " + longitude);
     }
 
     public void onBackPressed() {
@@ -73,26 +84,18 @@ public class AddMarkerActivity extends AppCompatActivity {
         }
     }
 
-    private void galleryAddPic(Uri contentUri) {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, contentUri);
-        sendBroadcast(mediaScanIntent);
-    }
 
     private void onCaptureImageResult() {
         if (mOutputFilePath != null) {
             File f = new File(mOutputFilePath);
             try {
                 System.out.println("Etape 1" + mOutputFilePath);
-
+                //pathImage.setText(mOutputFilePath);
 
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("Big Error " + e.getMessage());
             }
-        }
-        else
-        {
-
         }
     }
 
@@ -130,5 +133,21 @@ public class AddMarkerActivity extends AppCompatActivity {
         cursor.moveToFirst();
         int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
         return cursor.getString(idx);
+    }
+
+    public void quitAdd(View v) {
+
+        if(!pathImage.getText().toString().equals("")) {
+
+            File file = new File(pathImage.getText().toString());
+            if (file.exists())
+            {
+                file.delete();
+
+            }
+
+        }
+
+        this.finish();
     }
 }
