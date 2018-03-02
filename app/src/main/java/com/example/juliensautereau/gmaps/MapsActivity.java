@@ -1,20 +1,32 @@
 package com.example.juliensautereau.gmaps;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.location.Address;
+import android.location.Geocoder;
+import android.os.Build;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private BDD bdd;
 
     private GoogleMap mMap;
+    private Marker marker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +68,45 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         mMap.moveCamera(CameraUpdateFactory.newLatLng(lh));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(lh, 10));
+
+        if(mMap != null) {
+
+            mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+                   @Override
+                   public void onMapLongClick (LatLng latLng){
+
+                       if (marker != null) {
+                           marker.remove();
+                       }
+
+                       MarkerOptions options = new MarkerOptions()
+                               .title("<UNKNOWN NAME>")
+                               .position(new LatLng(latLng.latitude,
+                                       latLng.longitude));
+
+                       marker = mMap.addMarker(options);
+
+                       new AlertDialog.Builder(MapsActivity.this)
+                               .setTitle("INFO : Demande d'ajout")
+                               .setMessage("Souhaitez-vous ajouter ce marker ?")
+                               .setCancelable(false)
+                               .setPositiveButton("Valider", new DialogInterface.OnClickListener() {
+                                   @Override
+                                   public void onClick(DialogInterface dialog, int which) {
+                                       // Whatever...
+                                       Toast.makeText(MapsActivity.this, "Redirection vers l'ajout du marker", Toast.LENGTH_LONG).show();
+
+                                   }
+                               })
+                               .setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                                   @Override
+                                   public void onClick(DialogInterface dialog, int which) {
+                                       marker.remove();
+                                   }
+                               }).show();
+                   }
+               });
+        }
     }
 
     public void onBackPressed() {
