@@ -2,6 +2,7 @@ package com.example.juliensautereau.gmaps;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Build;
@@ -73,7 +74,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
                    @Override
-                   public void onMapLongClick (LatLng latLng){
+                   public void onMapLongClick (final LatLng latLng){
 
                        if (marker != null) {
                            marker.remove();
@@ -95,7 +96,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                    public void onClick(DialogInterface dialog, int which) {
                                        // Whatever...
                                        Toast.makeText(MapsActivity.this, "Redirection vers l'ajout du marker", Toast.LENGTH_LONG).show();
-
+                                       Intent i = new Intent(MapsActivity.this, AddMarkerActivity.class);
+                                       i.putExtra("coordX", latLng.latitude);
+                                       i.putExtra("coordY", latLng.longitude);
+                                       startActivity(i);
                                    }
                                })
                                .setNegativeButton("Annuler", new DialogInterface.OnClickListener() {

@@ -1,0 +1,5 @@
+<paths>
+    <external-files-path
+        name="test_images"
+        path="Pictures/Twitter"/>
+</paths>
