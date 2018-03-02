@@ -11,6 +11,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -26,13 +27,15 @@ import java.util.Date;
 public class AddMarkerActivity extends AppCompatActivity {
 
     private final static int REQUEST_CAMERA = 1102;
-    public static final String CAMERA_IMAGES_DIR = "Twitter";
+    public static final String CAMERA_IMAGES_DIR = "Markers";
     String mOutputFilePath;
+    TextView pathImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_marker);
+        pathImage = (findViewById(R.id.text1));
     }
 
     public void onBackPressed() {
@@ -79,11 +82,10 @@ public class AddMarkerActivity extends AppCompatActivity {
         if (mOutputFilePath != null) {
             File f = new File(mOutputFilePath);
             try {
-                File publicFile = copyImageFile(f);
-                Uri finalUri = Uri.fromFile(publicFile);
-                galleryAddPic(finalUri);
-                System.out.println("Affichage " + finalUri.toString());
-            } catch (IOException e) {
+                System.out.println("Etape 1" + mOutputFilePath);
+
+
+            } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("Big Error " + e.getMessage());
             }
