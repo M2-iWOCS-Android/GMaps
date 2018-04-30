@@ -116,11 +116,11 @@ public class FilterActivity extends AppCompatActivity {
 
         tv2 = new ToggleButton[col1.size()]; // création des cellules
 
+        // On vire toutes les vues
+        table.removeAllViews();
+
         // pour chaque ligne
         for (int i = 0; i < col1.size(); i++) {
-
-            // On vire toutes les vues
-            table.removeAllViews();
 
             row = new TableRow(this); // création d'une nouvelle ligne
 

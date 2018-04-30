@@ -11,6 +11,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,13 +34,22 @@ public class AddMarkerActivity extends AppCompatActivity {
     private double latitude = 0;
     private double longitude = 0;
 
+    EditText libelleMarker, descriptionMarker;
+
     TextView pathImage;
+
+    BDD bdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        bdd = new BDD(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_marker);
+
         pathImage = findViewById(R.id.path_image);
+        libelleMarker = findViewById(R.id.libelle_marker);
+        descriptionMarker = findViewById(R.id.description_marker);
 
         Bundle bundle = getIntent().getExtras();
 
@@ -47,6 +57,11 @@ public class AddMarkerActivity extends AppCompatActivity {
         longitude = bundle.getDouble("coordY");
 
         System.out.println(latitude + " : " + longitude);
+    }
+
+    protected void onDestroy() {
+        super.onDestroy();
+        bdd.stop();
     }
 
     public void onBackPressed() {
@@ -89,24 +104,14 @@ public class AddMarkerActivity extends AppCompatActivity {
         if (mOutputFilePath != null) {
             File f = new File(mOutputFilePath);
             try {
-                System.out.println("Etape 1" + mOutputFilePath);
-                //pathImage.setText(mOutputFilePath);
+                //System.out.println("Etape 1" + mOutputFilePath);
+                pathImage.setText(mOutputFilePath);
 
             } catch (Exception e) {
                 e.printStackTrace();
-                System.out.println("Big Error " + e.getMessage());
+                System.out.println("Erreur image " + e.getMessage());
             }
         }
-    }
-
-    public File copyImageFile(File fileToCopy) throws IOException {
-        File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), CAMERA_IMAGES_DIR + "/");
-        if (!storageDir.exists())
-            storageDir.mkdir();
-        File copyFile = new File(storageDir, fileToCopy.getName());
-        copyFile.createNewFile();
-        copy(fileToCopy, copyFile);
-        return copyFile;
     }
 
     public static void copy(File src, File dst) throws IOException {
@@ -121,20 +126,6 @@ public class AddMarkerActivity extends AppCompatActivity {
         out.close();
     }
 
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
-    }
-
-    public String getRealPathFromURI(Uri uri) {
-        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-        return cursor.getString(idx);
-    }
-
     public void quitAdd(View v) {
 
         if(!pathImage.getText().toString().equals("")) {
@@ -143,11 +134,43 @@ public class AddMarkerActivity extends AppCompatActivity {
             if (file.exists())
             {
                 file.delete();
-
             }
 
         }
 
         this.finish();
+    }
+
+    public void addMarker(View v) {
+
+        // On vérifie chaque champs obligatoire
+        if(libelleMarker.getText().toString().equals("")) {
+            Toast.makeText(AddMarkerActivity.this, "Le libelle n'est pas renseigné", Toast.LENGTH_LONG).show();
+        }
+        else if(descriptionMarker.getText().toString().equals("")) {
+            Toast.makeText(AddMarkerActivity.this, "La description n'est pas correcte", Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            System.out.println(pathImage.getText().toString());
+            if(pathImage.getText().toString().equals("aucun")) {
+
+                Point pt2 = new Point(libelleMarker.getText().toString(), descriptionMarker.getText().toString(), latitude, longitude, "");
+                bdd.pointBDD.insertPoint(pt2);
+                Toast.makeText(AddMarkerActivity.this, "Ajout du marker réussi", Toast.LENGTH_LONG).show();
+                Intent i = new Intent(AddMarkerActivity.this, HomeActivity.class);
+                startActivity(i);
+                AddMarkerActivity.this.finish();
+            }
+            else
+            {
+                Point pt1 = new Point(libelleMarker.getText().toString(), descriptionMarker.getText().toString(), latitude, longitude, pathImage.getText().toString());
+                bdd.pointBDD.insertPoint(pt1);
+                Toast.makeText(AddMarkerActivity.this, "Ajout du marker réussi", Toast.LENGTH_LONG).show();
+                Intent i = new Intent(AddMarkerActivity.this, HomeActivity.class);
+                startActivity(i);
+                AddMarkerActivity.this.finish();
+            }
+        }
     }
 }

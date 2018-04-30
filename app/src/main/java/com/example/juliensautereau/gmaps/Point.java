@@ -9,10 +9,11 @@ public class Point {
     private String description;
     private double latitude;
     private double longitude;
+    private String imageSrc;
     private int affiche;
 
     public Point(){
-        this("", "", 0, 0);
+        this("", "", 0, 0, "");
     }
 
     public Point(ContentValues cv) {
@@ -20,14 +21,16 @@ public class Point {
         this.description = (String)cv.get("description");
         this.latitude = (double)cv.get("latitude");
         this.longitude = (double)cv.get("longitude");
+        this.imageSrc = (String)cv.get("imageSrc");
         this.affiche = 1;
     }
 
-    public Point(String libelle, String description, double latitude, double longitude){
+    public Point(String libelle, String description, double latitude, double longitude, String imageSrc){
         this.libelle = libelle;
         this.description = description;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.imageSrc = imageSrc;
         this.affiche = 1;
     }
 
@@ -71,12 +74,16 @@ public class Point {
         this.longitude = longitude;
     }
 
+    public String getImageSrc() { return imageSrc; }
+
+    public void setImageSrc(String imageSrc) { this.imageSrc = imageSrc; }
+
     public int getAffiche() { return this.affiche; }
 
     public void setAffiche(int affiche) { this.affiche = affiche; }
 
     public String toString(){
-        return "Point : " + libelle + " : " + description + " " + " : Coordonnées - " + latitude + " // " + longitude + " (" + affiche + " )";
+        return "Point : " + libelle + " : " + description + " " + " : Coordonnées - " + latitude + " // " + longitude + " + " + imageSrc + " (" + affiche + " )";
         //return "ID : "+id+"\nISBN : "+isbn+"\nTitre : "+titre;
     }
 }

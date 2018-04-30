@@ -32,8 +32,11 @@ public class PointBDD {
     private static final String COL_PRESENT = "longitude";
     private static final int NUM_COL_PRESENT = 4;
 
+    private static final String COL_IMAGE = "imageSrc";
+    private static final int NUM_COL_IMAGE = 5;
+
     private static final String COL_HEURE = "affiche";
-    private static final int NUM_COL_HEURE = 5;
+    private static final int NUM_COL_HEURE = 6;
 
     private SQLiteDatabase bdd;
 
@@ -70,6 +73,7 @@ public class PointBDD {
         values.put(COL_PRENOM, point.getDescription());
         values.put(COL_NETUDIANT, point.getLatitude());
         values.put(COL_PRESENT, point.getLongitude());
+        values.put(COL_IMAGE, point.getImageSrc());
         values.put(COL_HEURE, point.getAffiche());
         //on insère l'objet dans la BDD via le ContentValues
         return bdd.insert(TABLE_POINT, null, values);
@@ -82,6 +86,7 @@ public class PointBDD {
         values.put(COL_NOM, point.getLibelle());
         values.put(COL_PRENOM, point.getDescription());
         values.put(COL_NETUDIANT, point.getLatitude());
+        values.put(COL_IMAGE, point.getImageSrc());
         values.put(COL_PRESENT, point.getLongitude());
         values.put(COL_HEURE, affiche);
 
@@ -106,7 +111,7 @@ public class PointBDD {
 
     public void initPoint() {
 
-        Point pt1 = new Point("Université Le Havre", "Lieu d'étude universitaire", 49.4964477, 0.12827249999998003);
+        Point pt1 = new Point("Université Le Havre", "Lieu d'étude universitaire", 49.4964477, 0.12827249999998003, "");
         insertPoint(pt1);
     }
 
@@ -141,6 +146,7 @@ public class PointBDD {
             values.put(COL_PRENOM, point.getDescription());
             values.put(COL_NETUDIANT, point.getLatitude());
             values.put(COL_PRESENT, point.getLongitude());
+            values.put(COL_IMAGE, point.getImageSrc());
             values.put(COL_HEURE, point.getAffiche());
             bdd.update(TABLE_POINT, values, COL_NOM + " LIKE \"" + point.getLibelle()+"\"", null);
         }
@@ -167,6 +173,7 @@ public class PointBDD {
             point.setDescription(c.getString(NUM_COL_PRENOM));
             point.setLatitude(c.getFloat(NUM_COL_NETUDIANT));
             point.setLongitude(c.getFloat(NUM_COL_PRESENT));
+            point.setImageSrc(c.getString(NUM_COL_IMAGE));
             point.setAffiche(c.getInt(NUM_COL_HEURE));
 
             listE.add(point);
@@ -228,6 +235,7 @@ public class PointBDD {
         point.setDescription(c.getString(NUM_COL_PRENOM));
         point.setLatitude(c.getFloat(NUM_COL_NETUDIANT));
         point.setLongitude(c.getFloat(NUM_COL_PRESENT));
+        point.setImageSrc(c.getString(NUM_COL_IMAGE));
         point.setAffiche(c.getInt(NUM_COL_HEURE));
 
        // System.out.println("Num col heure : " + c.getString(NUM_COL_HEURE));

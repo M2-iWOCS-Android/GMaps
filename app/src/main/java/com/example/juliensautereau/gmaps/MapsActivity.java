@@ -3,6 +3,9 @@ package com.example.juliensautereau.gmaps;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Build;
@@ -14,11 +17,13 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
@@ -63,8 +68,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if(point.getAffiche() == 1) {
 
                 LatLng newP = new LatLng(point.getLatitude(), point.getLongitude());
-                mMap.addMarker(new MarkerOptions().position(newP).title(point.getLibelle()));
+                if(point.getImageSrc().toString().equals("")) {
+                    mMap.addMarker(new MarkerOptions().position(newP).title(point.getLibelle()).snippet(point.getDescription()));
+                }
+                else
+                {
+                    Bitmap bmp = BitmapFactory.decodeFile(point.getImageSrc().toString());
+                    int width = bmp.getWidth();
+                    int height = bmp.getHeight();
+                    float scaleWidth = ((float) 150) / width;
+                    float scaleHeight = ((float) 150) / height;
+                    // CREATE A MATRIX FOR THE MANIPULATION
+                    Matrix matrix = new Matrix();
 
+                    // RESIZE THE BIT MAP
+                    matrix.postScale(scaleWidth, scaleHeight);
+                    matrix.postRotate(90);
+
+                    Bitmap resizedBitmap = Bitmap.createBitmap(
+                            bmp, 0, 0, width, height, matrix, false);
+
+                    bmp.recycle();
+
+                    mMap.addMarker(new MarkerOptions().position(newP).title(point.getLibelle()).snippet(point.getDescription()).icon(BitmapDescriptorFactory.fromBitmap(resizedBitmap)).anchor(0.5f, 0.5f));
+                }
             }
         }
         mMap.moveCamera(CameraUpdateFactory.newLatLng(lh));

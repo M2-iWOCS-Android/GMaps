@@ -60,6 +60,11 @@ public class BDD {
         pointBDD.open();
     }
 
+    public BDD(AddMarkerActivity th) {
+        pointBDD = new PointBDD(th);
+        pointBDD.open();
+    }
+
     public ArrayList<Point> here(int i) {
         return pointBDD.getEtudiantHere(i);
     }

@@ -47,11 +47,13 @@
         android:paddingTop="20dp">
 
     <EditText
+        android:id="@+id/libelle_marker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Libellé"/>
 
     <EditText
+        android:id="@+id/description_marker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Description"/>
@@ -154,7 +156,8 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ajouter un marker" />
+                android:text="Ajouter un marker"
+                android:onClick="addMarker" />
 
             <Button
                 android:layout_width="match_parent"

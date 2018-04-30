@@ -69,8 +69,6 @@ public class HomeActivity extends AppCompatActivity {
                 presence = "Ne pas affiché";
             }
 
-
-
             message += point.getLibelle() + " / " + point.getDescription() + " / " + " ( " + presence + " ) \n";
         }
 
