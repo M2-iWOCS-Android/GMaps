@@ -80,8 +80,6 @@ public class PointBDD {
     }
 
     public int updatePoint(String libelle, int affiche, Point point){
-        //La mise à jour d'un etudiant dans la BDD fonctionne plus ou moins comme une insertion
-        //il faut simplement préciser quel étudiant on doit mettre à jour grâce à l'ID
         ContentValues values = new ContentValues();
         values.put(COL_NOM, point.getLibelle());
         values.put(COL_PRENOM, point.getDescription());
@@ -116,25 +114,25 @@ public class PointBDD {
     }
 
     public int removePointWithID(int id){
-        //Suppression d'un livre de la BDD grâce à l'ID
+        //Suppression d'un point de la BDD grâce à l'ID
         return bdd.delete(TABLE_POINT, COL_ID + " = " +id, null);
     }
 
     public Point getEtudiantWithNumEt(String NumEtudiant){
-        //Récupère dans un Cursor les valeurs correspondant à un étudiant contenu dans la BDD (ici on sélectionne l'étudiant grâce à son num étudiant)
+        //Récupère dans un Cursor les valeurs correspondant à un point contenu dans la BDD (ici on sélectionne le point grâce à son nom)
         Cursor c = bdd.query(TABLE_POINT, new String[] {"*"}, COL_NOM + " LIKE \"" + NumEtudiant +"\"", null, null, null, null);
         return cursorToEtudiant(c);
     }
 
-    //retourne tous les étudiants
+    //retourne tous les points
     public ArrayList<Point> getEtudiantAll(){
-        //Récupère dans un Cursor les valeurs correspondant à tous les étudiants contenus dans la BDD
+        //Récupère dans un Cursor les valeurs correspondant à tous les points contenus dans la BDD
         Cursor c = bdd.query(TABLE_POINT, new String[] {"*"}, null, null, null, null, null);
         return cursorToEtudiants(c);
     }
 
     public ArrayList<Point> getEtudiantHere(int here){
-        //Récupère dans un Cursor les valeurs correspondant à un étudiant contenu dans la BDD (ici on sélectionne l'étudiant si il est présent)
+        //Récupère dans un Cursor les valeurs correspondant à un point contenu dans la BDD (ici on sélectionne le point s'il est présent)
         Cursor c = bdd.query(TABLE_POINT, new String[] {"*"}, COL_PRESENT + " = \"" + here +"\"", null, null, null, null);
         return cursorToEtudiants(c);
     }
@@ -165,7 +163,7 @@ public class PointBDD {
         while(!c.isAfterLast()) {
 
 
-            //On créé un étudiant
+            //On créé un point
             Point point = new Point();
             //on lui affecte toutes les infos grâce aux infos contenues dans le Cursor
             point.setId(c.getInt(NUM_COL_ID));
@@ -190,7 +188,7 @@ public class PointBDD {
             listE.add(bidon);
         }
 
-        //On retourne l'etudiant
+        //On retourne le point
         return listE;
     }
 
@@ -215,11 +213,9 @@ public class PointBDD {
         String time = new SimpleDateFormat("HH:mm:ss").format(cDate);
         
         return "";
-        //return  e.getNom() + " " + e.getPrenom() + " identifié !\n le " + date + " à " + e.getHeure();
-        
     }
 
-    //Cette méthode permet de convertir un cursor en un Etudiant
+    //Cette méthode permet de convertir un cursor en un point
     private Point cursorToEtudiant(Cursor c){
         //si aucun élément n'a été retourné dans la requête, on renvoie null
         if (c.getCount() == 0)
@@ -227,7 +223,7 @@ public class PointBDD {
 
         //Sinon on se place sur le premier élément
         c.moveToFirst();
-        //On créé un étudiant
+        //On créé un point
         Point point = new Point();
         //on lui affecte toutes les infos grâce aux infos contenues dans le Cursor
         point.setId(c.getInt(NUM_COL_ID));
@@ -243,7 +239,7 @@ public class PointBDD {
         //On ferme le cursor
         c.close();
 
-        //On retourne l'etudiant
+        //On retourne le point
         return point;
     }
 

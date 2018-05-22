@@ -26,7 +26,7 @@ public class SettingsActivity extends AppCompatActivity {
     public void clearDB(View v) {
 
         bdd.raz();
-        Toast.makeText(this, "Base de données nettoyé intégralement", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Base de données nettoyée intégralement", Toast.LENGTH_LONG).show();
     }
 
     public void onBackPressed() {

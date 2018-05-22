@@ -84,6 +84,5 @@ public class Point {
 
     public String toString(){
         return "Point : " + libelle + " : " + description + " " + " : Coordonnées - " + latitude + " // " + longitude + " + " + imageSrc + " (" + affiche + " )";
-        //return "ID : "+id+"\nISBN : "+isbn+"\nTitre : "+titre;
     }
 }

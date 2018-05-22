@@ -76,7 +76,7 @@ public class FilterActivity extends AppCompatActivity {
             }
         }
 
-        afficherMessage("Mise à jour des markers effectuée avec succès et bravoure !");
+        afficherMessage("Mise à jour des markers effectuée avec succès");
 
         refresh();
     }

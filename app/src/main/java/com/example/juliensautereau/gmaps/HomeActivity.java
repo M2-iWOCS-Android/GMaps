@@ -62,11 +62,11 @@ public class HomeActivity extends AppCompatActivity {
         for(Point point : bdd.getAllPoints()) {
 
             if(point.getAffiche() == 1) {
-                presence = "Affiché";
+                presence = "Afficher";
             }
             else
             {
-                presence = "Ne pas affiché";
+                presence = "Ne pas afficher";
             }
 
             message += point.getLibelle() + " / " + point.getDescription() + " / " + " ( " + presence + " ) \n";

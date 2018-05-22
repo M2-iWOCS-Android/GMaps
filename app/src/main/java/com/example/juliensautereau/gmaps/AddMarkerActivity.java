@@ -145,7 +145,7 @@ public class AddMarkerActivity extends AppCompatActivity {
 
         // On vérifie chaque champs obligatoire
         if(libelleMarker.getText().toString().equals("")) {
-            Toast.makeText(AddMarkerActivity.this, "Le libelle n'est pas renseigné", Toast.LENGTH_LONG).show();
+            Toast.makeText(AddMarkerActivity.this, "Le libellé n'est pas renseigné", Toast.LENGTH_LONG).show();
         }
         else if(descriptionMarker.getText().toString().equals("")) {
             Toast.makeText(AddMarkerActivity.this, "La description n'est pas correcte", Toast.LENGTH_LONG).show();
