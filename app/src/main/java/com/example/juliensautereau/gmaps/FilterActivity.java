@@ -31,6 +31,26 @@ public class FilterActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onSaveInstanceState ( Bundle bundle ) {
+        super.onSaveInstanceState(bundle);
+    }
+
+    @Override
+    protected void onRestoreInstanceState ( Bundle bundle ) {
+        super.onRestoreInstanceState(bundle);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //ajoute les entrées de menu_test à l'ActionBar
         getMenuInflater().inflate(R.menu.menu_filter, menu);
@@ -57,6 +77,7 @@ public class FilterActivity extends AppCompatActivity {
         Toast.makeText(this, s, Toast.LENGTH_LONG).show();
     }
 
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         b.stop();

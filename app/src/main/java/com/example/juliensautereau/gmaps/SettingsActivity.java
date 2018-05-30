@@ -18,6 +18,27 @@ public class SettingsActivity extends AppCompatActivity {
         bdd = new BDD(this);
     }
 
+    @Override
+    protected void onSaveInstanceState ( Bundle bundle ) {
+        super.onSaveInstanceState(bundle);
+    }
+
+    @Override
+    protected void onRestoreInstanceState ( Bundle bundle ) {
+        super.onRestoreInstanceState(bundle);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         bdd.stop();
@@ -29,6 +50,7 @@ public class SettingsActivity extends AppCompatActivity {
         Toast.makeText(this, "Base de données nettoyée intégralement", Toast.LENGTH_LONG).show();
     }
 
+    @Override
     public void onBackPressed() {
         bdd.stop();
         this.finish();

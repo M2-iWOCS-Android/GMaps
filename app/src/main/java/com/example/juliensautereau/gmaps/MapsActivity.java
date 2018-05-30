@@ -46,6 +46,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         bdd = new BDD(this);
     }
 
+    @Override
+    protected void onSaveInstanceState ( Bundle bundle ) {
+        super.onSaveInstanceState(bundle);
+    }
+
+    @Override
+    protected void onRestoreInstanceState ( Bundle bundle ) {
+        super.onRestoreInstanceState(bundle);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -141,7 +161,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    @Override
     public void onBackPressed() {
-        bdd.stop(); this.finish();
+        bdd.stop();
+        this.finish();
     }
 }

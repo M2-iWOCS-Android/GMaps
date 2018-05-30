@@ -17,11 +17,33 @@ public class HomeActivity extends AppCompatActivity {
         bdd = new BDD(this);
     }
 
+    @Override
+    protected void onSaveInstanceState ( Bundle bundle ) {
+        super.onSaveInstanceState(bundle);
+    }
+
+    @Override
+    protected void onRestoreInstanceState ( Bundle bundle ) {
+        super.onRestoreInstanceState(bundle);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         bdd.stop();
     }
 
+    @Override
     public void onBackPressed() {
         bdd.stop();
         this.finish();

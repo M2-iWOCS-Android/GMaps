@@ -59,11 +59,33 @@ public class AddMarkerActivity extends AppCompatActivity {
         System.out.println(latitude + " : " + longitude);
     }
 
+    @Override
+    protected void onSaveInstanceState ( Bundle bundle ) {
+        super.onSaveInstanceState(bundle);
+    }
+
+    @Override
+    protected void onRestoreInstanceState ( Bundle bundle ) {
+        super.onRestoreInstanceState(bundle);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         bdd.stop();
     }
 
+    @Override
     public void onBackPressed() {
         //TODO Bloquer le bouton Retour en arrière
     }
