@@ -15,9 +15,6 @@ public class BDD {
         //Création de la BDD point
         pointBDD = new PointBDD(th);
 
-        //Création des points
-        // Point pt1 = new Point("Université Le Havre", "lieu", 0.23,0);
-
         //On ouvre la base de données pour écrire dedans
         pointBDD.open();
 
@@ -72,11 +69,4 @@ public class BDD {
     public ArrayList<Point> getAllPoints() {
         return pointBDD.getEtudiantAll();
     }
-
-    //Check Etudiant
-    //public boolean checkEtudiant(String s) { return etudiantBdd.existeEtudiant(s); }
-
-    // Ajout Etudiant
-    //public long ajoutEtudiant(Etudiant etu) { return etudiantBdd.insertEtudiant(etu); }
-
 }

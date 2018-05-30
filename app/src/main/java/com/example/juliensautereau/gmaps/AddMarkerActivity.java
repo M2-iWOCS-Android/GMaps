@@ -153,7 +153,7 @@ public class AddMarkerActivity extends AppCompatActivity {
         else
         {
             System.out.println(pathImage.getText().toString());
-            if(pathImage.getText().toString().equals("aucun")) {
+            if(pathImage.getText().toString().equals(getResources().getString(R.string.aucunePhoto))) {
 
                 Point pt2 = new Point(libelleMarker.getText().toString(), descriptionMarker.getText().toString(), latitude, longitude, "");
                 bdd.pointBDD.insertPoint(pt2);

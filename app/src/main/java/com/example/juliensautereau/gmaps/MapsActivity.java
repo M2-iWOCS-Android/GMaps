@@ -68,12 +68,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if(point.getAffiche() == 1) {
 
                 LatLng newP = new LatLng(point.getLatitude(), point.getLongitude());
-                if(point.getImageSrc().toString().equals("")) {
+                if(point.getImageSrc().equals("")) {
                     mMap.addMarker(new MarkerOptions().position(newP).title(point.getLibelle()).snippet(point.getDescription()));
                 }
                 else
                 {
-                    Bitmap bmp = BitmapFactory.decodeFile(point.getImageSrc().toString());
+                    Bitmap bmp = BitmapFactory.decodeFile(point.getImageSrc());
                     int width = bmp.getWidth();
                     int height = bmp.getHeight();
                     float scaleWidth = ((float) 150) / width;

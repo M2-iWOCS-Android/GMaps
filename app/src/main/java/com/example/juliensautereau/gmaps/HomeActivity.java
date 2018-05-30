@@ -36,7 +36,8 @@ public class HomeActivity extends AppCompatActivity {
 
     // On quitte l'application
     public void quitApp(View v) {
-        bdd.stop(); this.finish();
+        bdd.stop();
+        finishAffinity();
     }
 
     // On accède aux paramètres

@@ -116,7 +116,7 @@ public class FilterActivity extends AppCompatActivity {
 
         tv2 = new ToggleButton[col1.size()]; // création des cellules
 
-        // On vire toutes les vues
+        // On vide le tableau
         table.removeAllViews();
 
         // pour chaque ligne

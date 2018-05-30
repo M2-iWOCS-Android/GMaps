@@ -95,7 +95,7 @@ public class PointBDD {
 
         this.open();
 
-        // on supprime tous les points inscrit en bdd
+        // on supprime tous les points inscrits en base de données
         for(Point point : getEtudiantAll()) {
 
             this.removePointWithID(point.getId());
@@ -108,7 +108,7 @@ public class PointBDD {
     }
 
     public void initPoint() {
-
+        //Création des points
         Point pt1 = new Point("Université Le Havre", "Lieu d'étude universitaire", 49.4964477, 0.12827249999998003, "");
         insertPoint(pt1);
     }
@@ -163,7 +163,7 @@ public class PointBDD {
         while(!c.isAfterLast()) {
 
 
-            //On créé un point
+            //On crée un point
             Point point = new Point();
             //on lui affecte toutes les infos grâce aux infos contenues dans le Cursor
             point.setId(c.getInt(NUM_COL_ID));
