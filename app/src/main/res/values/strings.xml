@@ -5,4 +5,19 @@
     <string name="mapsTitle">Affichage de la map</string>
     <string name="settingsTitle">Paramètres</string>
     <string name="filterTitle">Filtrer les markers</string>
+    <string name="accesMap">Accéder à la map</string>
+    <string name="accesFilter">Filtrage des markers</string>
+    <string name="accesSettings">Paramètres</string>
+    <string name="quitApp">Quitter l\'application</string>
+    <string name="version">Version 1.0</string>
+    <string name="informations">Informations</string>
+    <string name="libelle">Libellé</string>
+    <string name="description">Description</string>
+    <string name="modeCapture">Mode capture (Facultatif)</string>
+    <string name="takePhoto">Prendre une photo</string>
+    <string name="aucunePhoto">Aucune photo</string>
+    <string name="actionsPossibles">Actions possibles</string>
+    <string name="addMarker">Ajouter un marker</string>
+    <string name="quitAdd">Annuler l\'ajout</string>
+    <string name="clearDB">Nettoyer la base de données</string>
 </resources>

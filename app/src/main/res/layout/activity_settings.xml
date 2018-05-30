@@ -24,7 +24,7 @@
                 android:layout_gravity="center_horizontal"
                 android:padding="9dp"
                 android:drawableLeft="@drawable/ic_restore_black_24dp"
-                android:text="Nettoyer la base de données"
+                android:text="@string/clearDB"
                 android:layout_marginTop="15dp"
                 android:background="#FFFFFF"
                 android:onClick="clearDB"
