@@ -1,7 +1,6 @@
 package com.example.juliensautereau.gmaps;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -50,10 +49,6 @@ public class BDD {
         pointBDD.open();
     }
 
-    public ArrayList<Point> here(int i) {
-        return pointBDD.getEtudiantHere(i);
-    }
-
     public void stop() {  pointBDD.close(); }
 
     public void raz() {
@@ -61,12 +56,12 @@ public class BDD {
     }
 
     public void update(String libelle, int affiche) {
-        Point p = pointBDD.getEtudiantWithNumEt(libelle);
+        Point p = pointBDD.getPointWithLibelle(libelle);
         pointBDD.updatePoint(libelle, affiche, p);
     }
 
-    //Récupération de tous les étudiants
+    //Récupération de tous les points
     public ArrayList<Point> getAllPoints() {
-        return pointBDD.getEtudiantAll();
+        return pointBDD.getPointAll();
     }
 }

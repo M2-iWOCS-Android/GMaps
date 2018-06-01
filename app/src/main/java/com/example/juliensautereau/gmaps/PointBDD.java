@@ -5,10 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.sql.Time;
-import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class PointBDD {
@@ -20,23 +18,23 @@ public class PointBDD {
     private static final String COL_ID = "_id";
     private static final int NUM_COL_ID = 0;
 
-    private static final String COL_NOM = "libelle";
-    private static final int NUM_COL_NOM = 1;
+    private static final String COL_LIBELLE = "libelle";
+    private static final int NUM_COL_LIBELLE = 1;
 
-    private static final String COL_PRENOM = "description";
-    private static final int NUM_COL_PRENOM = 2;
+    private static final String COL_DESCRIPTION = "description";
+    private static final int NUM_COL_DESCRIPTION = 2;
 
-    private static final String COL_NETUDIANT = "latitude";
-    private static final int NUM_COL_NETUDIANT = 3;
+    private static final String COL_LATITUDE = "latitude";
+    private static final int NUM_COL_LATITUDE = 3;
 
-    private static final String COL_PRESENT = "longitude";
-    private static final int NUM_COL_PRESENT = 4;
+    private static final String COL_LONGITUDE = "longitude";
+    private static final int NUM_COL_LONGITUDE = 4;
 
     private static final String COL_IMAGE = "imageSrc";
     private static final int NUM_COL_IMAGE = 5;
 
-    private static final String COL_HEURE = "affiche";
-    private static final int NUM_COL_HEURE = 6;
+    private static final String COL_AFFICHE = "affiche";
+    private static final int NUM_COL_AFFICHE = 6;
 
     private SQLiteDatabase bdd;
 
@@ -69,26 +67,26 @@ public class PointBDD {
         //Création d'un ContentValues (fonctionne comme une HashMap)
         ContentValues values = new ContentValues();
         //on lui ajoute une valeur associée à une clé (qui est le nom de la colonne dans laquelle on veut mettre la valeur)
-        values.put(COL_NOM, point.getLibelle());
-        values.put(COL_PRENOM, point.getDescription());
-        values.put(COL_NETUDIANT, point.getLatitude());
-        values.put(COL_PRESENT, point.getLongitude());
+        values.put(COL_LIBELLE, point.getLibelle());
+        values.put(COL_DESCRIPTION, point.getDescription());
+        values.put(COL_LATITUDE, point.getLatitude());
+        values.put(COL_LONGITUDE, point.getLongitude());
         values.put(COL_IMAGE, point.getImageSrc());
-        values.put(COL_HEURE, point.getAffiche());
+        values.put(COL_AFFICHE, point.getAffiche());
         //on insère l'objet dans la BDD via le ContentValues
         return bdd.insert(TABLE_POINT, null, values);
     }
 
     public int updatePoint(String libelle, int affiche, Point point){
         ContentValues values = new ContentValues();
-        values.put(COL_NOM, point.getLibelle());
-        values.put(COL_PRENOM, point.getDescription());
-        values.put(COL_NETUDIANT, point.getLatitude());
+        values.put(COL_LIBELLE, point.getLibelle());
+        values.put(COL_DESCRIPTION, point.getDescription());
+        values.put(COL_LATITUDE, point.getLatitude());
         values.put(COL_IMAGE, point.getImageSrc());
-        values.put(COL_PRESENT, point.getLongitude());
-        values.put(COL_HEURE, affiche);
+        values.put(COL_LONGITUDE, point.getLongitude());
+        values.put(COL_AFFICHE, affiche);
 
-        return bdd.update(TABLE_POINT, values, COL_NOM + " LIKE \"" + libelle +"\"", null);
+        return bdd.update(TABLE_POINT, values, COL_LIBELLE + " LIKE \"" + libelle +"\"", null);
     }
 
     public void reinitDB() {
@@ -96,7 +94,7 @@ public class PointBDD {
         this.open();
 
         // on supprime tous les points inscrits en base de données
-        for(Point point : getEtudiantAll()) {
+        for(Point point : getPointAll()) {
 
             this.removePointWithID(point.getId());
         }
@@ -109,8 +107,10 @@ public class PointBDD {
 
     public void initPoint() {
         //Création des points
-        Point pt1 = new Point("Université Le Havre", "Lieu d'étude universitaire", 49.4964477, 0.12827249999998003, "");
-        insertPoint(pt1);
+        if ( !existePoint("Université Le Havre") ) {
+            Point pt1 = new Point("Université Le Havre", "Lieu d'étude universitaire", 49.4964477, 0.12827249999998003, "");
+            insertPoint(pt1);
+        }
     }
 
     public int removePointWithID(int id){
@@ -118,40 +118,34 @@ public class PointBDD {
         return bdd.delete(TABLE_POINT, COL_ID + " = " +id, null);
     }
 
-    public Point getEtudiantWithNumEt(String NumEtudiant){
-        //Récupère dans un Cursor les valeurs correspondant à un point contenu dans la BDD (ici on sélectionne le point grâce à son nom)
-        Cursor c = bdd.query(TABLE_POINT, new String[] {"*"}, COL_NOM + " LIKE \"" + NumEtudiant +"\"", null, null, null, null);
-        return cursorToEtudiant(c);
+    public Point getPointWithLibelle(String libelle){
+        //Récupère dans un Cursor les valeurs correspondant à un point contenu dans la BDD (ici on sélectionne le point grâce à son libellé)
+        Cursor c = bdd.query(TABLE_POINT, new String[] {"*"}, COL_LIBELLE + " LIKE \"" + libelle +"\"", null, null, null, null);
+        return cursorToPoint(c);
     }
 
     //retourne tous les points
-    public ArrayList<Point> getEtudiantAll(){
+    public ArrayList<Point> getPointAll(){
         //Récupère dans un Cursor les valeurs correspondant à tous les points contenus dans la BDD
         Cursor c = bdd.query(TABLE_POINT, new String[] {"*"}, null, null, null, null, null);
-        return cursorToEtudiants(c);
-    }
-
-    public ArrayList<Point> getEtudiantHere(int here){
-        //Récupère dans un Cursor les valeurs correspondant à un point contenu dans la BDD (ici on sélectionne le point s'il est présent)
-        Cursor c = bdd.query(TABLE_POINT, new String[] {"*"}, COL_PRESENT + " = \"" + here +"\"", null, null, null, null);
-        return cursorToEtudiants(c);
+        return cursorToPoints(c);
     }
 
     public void raz() {
-        for(Point point : getEtudiantAll()) {
+        for(Point point : getPointAll()) {
             ContentValues values = new ContentValues();
-            values.put(COL_NOM, point.getLibelle());
-            values.put(COL_PRENOM, point.getDescription());
-            values.put(COL_NETUDIANT, point.getLatitude());
-            values.put(COL_PRESENT, point.getLongitude());
+            values.put(COL_LIBELLE, point.getLibelle());
+            values.put(COL_DESCRIPTION, point.getDescription());
+            values.put(COL_LATITUDE, point.getLatitude());
+            values.put(COL_LONGITUDE, point.getLongitude());
             values.put(COL_IMAGE, point.getImageSrc());
-            values.put(COL_HEURE, point.getAffiche());
-            bdd.update(TABLE_POINT, values, COL_NOM + " LIKE \"" + point.getLibelle()+"\"", null);
+            values.put(COL_AFFICHE, point.getAffiche());
+            bdd.update(TABLE_POINT, values, COL_LIBELLE + " LIKE \"" + point.getLibelle()+"\"", null);
         }
     }
 
 
-    private ArrayList<Point> cursorToEtudiants(Cursor c) {
+    private ArrayList<Point> cursorToPoints(Cursor c) {
         //si aucun élément n'a été retourné dans la requête, on renvoie null
         if (c.getCount() == 0)
             return null;
@@ -167,12 +161,12 @@ public class PointBDD {
             Point point = new Point();
             //on lui affecte toutes les infos grâce aux infos contenues dans le Cursor
             point.setId(c.getInt(NUM_COL_ID));
-            point.setLibelle(c.getString(NUM_COL_NOM));
-            point.setDescription(c.getString(NUM_COL_PRENOM));
-            point.setLatitude(c.getFloat(NUM_COL_NETUDIANT));
-            point.setLongitude(c.getFloat(NUM_COL_PRESENT));
+            point.setLibelle(c.getString(NUM_COL_LIBELLE));
+            point.setDescription(c.getString(NUM_COL_DESCRIPTION));
+            point.setLatitude(c.getFloat(NUM_COL_LATITUDE));
+            point.setLongitude(c.getFloat(NUM_COL_LONGITUDE));
             point.setImageSrc(c.getString(NUM_COL_IMAGE));
-            point.setAffiche(c.getInt(NUM_COL_HEURE));
+            point.setAffiche(c.getInt(NUM_COL_AFFICHE));
 
             listE.add(point);
             c.moveToNext();
@@ -192,9 +186,9 @@ public class PointBDD {
         return listE;
     }
 
-    public boolean existeEtudiant(String NumEtudiant) {
+    public boolean existePoint(String libelle) {
 
-        Cursor c = bdd.query(TABLE_POINT, new String[] {"*"}, COL_NOM + " LIKE \"" + NumEtudiant +"\"", null, null, null, null);
+        Cursor c = bdd.query(TABLE_POINT, new String[] {"*"}, COL_LIBELLE + " LIKE \"" + libelle +"\"", null, null, null, null);
         if(c.getCount() > 0) {
             return true;
         }
@@ -203,38 +197,36 @@ public class PointBDD {
             return false;
         }
     }
-    
-    public String getEtudiantInfos(String NumEtudiant) {
-        Cursor c = bdd.query(TABLE_POINT, new String[] {"*"}, COL_NOM + " LIKE \"" + NumEtudiant +"\"", null, null, null, null);
-        Point e = cursorToEtudiant(c);
-        
+
+    public String getPointInfos(String libelle) {
+        Cursor c = bdd.query(TABLE_POINT, new String[] {"*"}, COL_LIBELLE + " LIKE \"" + libelle +"\"", null, null, null, null);
+        Point e = cursorToPoint(c);
+
         Date cDate = new Date();
         String date = new SimpleDateFormat("dd-MM-yyyy").format(cDate);
         String time = new SimpleDateFormat("HH:mm:ss").format(cDate);
-        
+
         return "";
     }
 
     //Cette méthode permet de convertir un cursor en un point
-    private Point cursorToEtudiant(Cursor c){
+    private Point cursorToPoint(Cursor c){
         //si aucun élément n'a été retourné dans la requête, on renvoie null
         if (c.getCount() == 0)
             return null;
 
         //Sinon on se place sur le premier élément
         c.moveToFirst();
-        //On créé un point
+        //On crée un point
         Point point = new Point();
         //on lui affecte toutes les infos grâce aux infos contenues dans le Cursor
         point.setId(c.getInt(NUM_COL_ID));
-        point.setLibelle(c.getString(NUM_COL_NOM));
-        point.setDescription(c.getString(NUM_COL_PRENOM));
-        point.setLatitude(c.getFloat(NUM_COL_NETUDIANT));
-        point.setLongitude(c.getFloat(NUM_COL_PRESENT));
+        point.setLibelle(c.getString(NUM_COL_LIBELLE));
+        point.setDescription(c.getString(NUM_COL_DESCRIPTION));
+        point.setLatitude(c.getFloat(NUM_COL_LATITUDE));
+        point.setLongitude(c.getFloat(NUM_COL_LONGITUDE));
         point.setImageSrc(c.getString(NUM_COL_IMAGE));
-        point.setAffiche(c.getInt(NUM_COL_HEURE));
-
-       // System.out.println("Num col heure : " + c.getString(NUM_COL_HEURE));
+        point.setAffiche(c.getInt(NUM_COL_AFFICHE));
 
         //On ferme le cursor
         c.close();

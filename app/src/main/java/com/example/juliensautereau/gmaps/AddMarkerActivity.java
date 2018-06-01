@@ -1,21 +1,17 @@
 package com.example.juliensautereau.gmaps;
 
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -87,7 +83,7 @@ public class AddMarkerActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //TODO Bloquer le bouton Retour en arrière
+        // bloque le bouton Retour en arrière
     }
 
     public File createImageFile() {
@@ -126,7 +122,6 @@ public class AddMarkerActivity extends AppCompatActivity {
         if (mOutputFilePath != null) {
             File f = new File(mOutputFilePath);
             try {
-                //System.out.println("Etape 1" + mOutputFilePath);
                 pathImage.setText(mOutputFilePath);
 
             } catch (Exception e) {
@@ -165,7 +160,7 @@ public class AddMarkerActivity extends AppCompatActivity {
 
     public void addMarker(View v) {
 
-        // On vérifie chaque champs obligatoire
+        // On vérifie chaque champ obligatoire
         if(libelleMarker.getText().toString().equals("")) {
             Toast.makeText(AddMarkerActivity.this, "Le libellé n'est pas renseigné", Toast.LENGTH_LONG).show();
         }

@@ -110,11 +110,7 @@ public class FilterActivity extends AppCompatActivity {
         // On vide avant ajout de nouvelles données
         b = new BDD(this);
 
-        String message = "";
         boolean presence = false;
-        String heure = "";
-
-        int size = 0;
 
         for (Point point : b.getAllPoints()) {
 

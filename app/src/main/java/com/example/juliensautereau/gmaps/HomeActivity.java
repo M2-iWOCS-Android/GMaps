@@ -80,7 +80,6 @@ public class HomeActivity extends AppCompatActivity {
 
         String message = "";
         String presence = "";
-        String heure = "";
 
         for(Point point : bdd.getAllPoints()) {
 
